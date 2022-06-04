@@ -50,8 +50,6 @@ function App() {
         key={die.id}
         id={die.id}
         holdDice={() => holdDice(die.id)}
-        // onClick={holdDice()}
-        // holdDice={(id) => holdDice(id, die.id)}
       />
     );
   });

@@ -1,5 +1,4 @@
 export default function Die(props) {
-  let id = props.id;
   return (
     <div className="die">
       <div
@@ -9,9 +8,6 @@ export default function Die(props) {
           color: props.isHeld ? "white" : "black",
         }}
         onClick={props.holdDice}
-        // onClick={() => {
-        //   props.holdDice(id);
-        // }}
       >
         {props.die}
       </div>
