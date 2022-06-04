@@ -1,19 +1,57 @@
 import React, { useState } from "react";
 import "./App.css";
 import Die from "./Die.js";
+import { nanoid } from "nanoid";
 
 function App() {
-  let [array, setArray] = useState(allNewDice());
+  let [dice, setDice] = useState(allNewDice());
+
+  function generateNewDie() {
+    return {
+      value: Math.ceil(Math.random() * 6),
+      isHeld: false,
+      id: nanoid(),
+    };
+  }
 
   function allNewDice() {
     let newDice = [];
     for (let i = 0; i < 10; i++) {
-      let randomNumber = Math.floor(Math.random() * 7) + 1;
-      newDice.push(randomNumber);
+      newDice.push(generateNewDie());
     }
     return newDice;
   }
-  allNewDice();
+
+  function holdDice(id) {
+    setDice((oldDice) =>
+      oldDice.map((die) => {
+        return die.id === id ? { ...die, isHeld: !die.isHeld } : die;
+      })
+    );
+  }
+
+  const diceElements = dice.map(function (die) {
+    return (
+      <Die
+        die={die.value}
+        isHeld={die.isHeld}
+        key={die.id}
+        id={die.id}
+        holdDice={() => holdDice(die.id)}
+        // onClick={holdDice()}
+        // holdDice={(id) => holdDice(id, die.id)}
+      />
+    );
+  });
+
+  function rollNewDice() {
+    setDice((oldDice) =>
+      oldDice.map((die) => {
+        return die.isHeld ? die : generateNewDie();
+      })
+    );
+  }
+
   return (
     <div className="App">
       <div className="container">
@@ -22,19 +60,9 @@ function App() {
           Roll until all dice are the same. Click each die to freeze it at its
           current value between rolls.
         </p>
-        <div className="die-grid">
-          <Die />
-          <Die />
-          <Die />
-          <Die />
-          <Die />
-          <Die />
-          <Die />
-          <Die />
-          <Die />
-          <Die />
-        </div>
-        <button>Roll</button>
+
+        <div className="die-grid">{diceElements}</div>
+        <button onClick={rollNewDice}>Roll</button>
       </div>
     </div>
   );

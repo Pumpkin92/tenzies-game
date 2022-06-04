@@ -33,6 +33,7 @@ button {
   font-size: 1.5rem;
   margin-top: 50px;
   font-family: "Karla", sans-serif;
+  cursor: pointer;
 }
 
 .die-grid {
@@ -52,7 +53,7 @@ button {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background-color: white;
+
   font-size: 2.5rem;
   font-weight: bold;
 }
